@@ -1,11 +1,11 @@
 from typing import Annotated
 from pydantic import BaseModel, Field
 
-from models import Account, Customer
+from models import Account
 from database import SessionLocal
 
 
-from fastapi import APIRouter, status, Depends, HTTPException, Path, Body
+from fastapi import APIRouter, status, Depends, HTTPException, Path
 from sqlalchemy.orm import Session
 
 

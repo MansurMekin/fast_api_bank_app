@@ -1,7 +1,6 @@
 from typing import Annotated
-from pydantic import BaseModel, Field
 
-from models import Account, Customer
+from models import Account
 from database import SessionLocal
 
 
@@ -44,7 +43,7 @@ async def block_account(db: db_dependency, account_id: int = Path(gt=0)):
 
 
 @router.put('/unblock/{account_id}', status_code=status.HTTP_200_OK)
-async def block_account(db: db_dependency, account_id: int = Path(gt=0)):
+async def unblock_account(db: db_dependency, account_id: int = Path(gt=0)):
     account_model = db.query(Account).filter(Account.id == account_id).first()
     if account_model is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

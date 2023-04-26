@@ -1,10 +1,11 @@
 from fastapi import FastAPI
-from routers import customers, accounts, admin
+
 import models
 from database import engine
+from routers import accounts, admin, customers
 
 app = FastAPI(
-    title='KaspiBank'
+    title="KaspiBank",
 )
 
 

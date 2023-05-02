@@ -72,8 +72,10 @@ def tranfer_operation_by_id(
     db: db_dependency, from_account: int, to_account: int, amount: AmountRequest
 ):
     if to_account == from_account:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail='Невозможен перевод самому себе')
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Невозможен перевод самому себе",
+        )
     from_account_model = db.query(Account).filter(Account.id == from_account).first()
     from_account_model.balance = from_account_model.balance - amount.amount
     if from_account_model is None:

@@ -1,30 +1,10 @@
-from typing import Annotated
+from fastapi import APIRouter, HTTPException, Path, status
 
-from fastapi import APIRouter, Depends, HTTPException, Path, status
-from pydantic import BaseModel, Field
-from sqlalchemy.orm import Session
-
-from database import SessionLocal
+from dependencies import db_dependency
 from models import Customer
+from schemas import CustomerCreateRequest
 
 router = APIRouter(prefix="/customers", tags=["customers"])
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-db_dependency = Annotated[Session, Depends(get_db)]
-
-
-class CustomerCreateRequest(BaseModel):
-    name: str = Field(min_length=3)
-    email: str = Field(min_length=10, default="example@mail.com")
-    phone_number: str = Field(min_length=8, default="87076165139")
 
 
 @router.get("/", status_code=status.HTTP_200_OK)

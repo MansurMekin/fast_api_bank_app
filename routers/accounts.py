@@ -1,34 +1,10 @@
-from typing import Annotated
+from fastapi import APIRouter, HTTPException, Path, status
 
-from fastapi import APIRouter, Depends, HTTPException, Path, status
-from pydantic import BaseModel, Field
-from sqlalchemy.orm import Session
-
-from database import SessionLocal
+from dependencies import db_dependency
 from models import Account
+from schemas import AccountCreateRequest, AmountRequest
 
 router = APIRouter(prefix="/accounts", tags=["accounts"])
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-db_dependency = Annotated[Session, Depends(get_db)]
-
-
-class AccountCreateRequest(BaseModel):
-    account_number: str
-    balance: int = Field(default=0)
-    customer_id: int = Field(gt=0)
-
-
-class AmountRequest(BaseModel):
-    amount: int
 
 
 @router.get("/", status_code=status.HTTP_200_OK)

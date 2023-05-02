@@ -1,23 +1,9 @@
-from typing import Annotated
+from fastapi import APIRouter, HTTPException, Path, status
 
-from fastapi import APIRouter, Depends, HTTPException, Path, status
-from sqlalchemy.orm import Session
-
-from database import SessionLocal
+from dependencies import db_dependency
 from models import Account
 
 router = APIRouter(prefix="/admin", tags=["admin"])
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-db_dependency = Annotated[Session, Depends(get_db)]
 
 
 @router.put("/block/{account_id}", status_code=status.HTTP_200_OK)

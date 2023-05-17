@@ -1,7 +1,8 @@
-from ..db import get_db
+import services
 from fastapi import APIRouter, Depends, HTTPException, Path, status
 from sqlalchemy.orm import Session
 
+from app.db import get_db
 from app.models import Account
 
 router = APIRouter(prefix="/admin", tags=["admin"])

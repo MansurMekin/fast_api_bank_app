@@ -4,13 +4,14 @@ from sqlalchemy.orm import Session
 from app.api.schemas import CustomerCreateRequest
 from app.db import get_db
 from app.models import Customer
+from app.services.customers import CustomerService
 
 router = APIRouter(prefix="/customers", tags=["customers"])
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
-async def get_customers(db: Session = Depends(get_db)):
-    return db.query(Customer).all()
+async def get_customers(service: CustomerService = Depends()):
+    return service.get_list()
 
 
 @router.get("/{customer_id}", status_code=status.HTTP_200_OK)

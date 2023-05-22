@@ -11,7 +11,7 @@ class Customer(Base):
     name = Column(String(100), nullable=False)
     email = Column(String(100), nullable=False)
     phone_number = Column(String(20), nullable=False)
-    accounts = relationship("Account", backref="customer", lazy="dynamic")
+    accounts = relationship("Account", backref="customer", lazy="joined")
 
 
 class Account(Base):

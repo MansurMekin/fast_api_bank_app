@@ -1,5 +1,5 @@
 from fastapi import Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app import models
 from app.api.schemas import CustomerCreateRequest
@@ -13,6 +13,7 @@ class CustomerService:
     def _get(self, customer_id: int):
         customer = (
             self.session.query(models.Customer)
+            .options(joinedload(models.Customer.accounts))
             .filter(models.Customer.id == customer_id)
             .first()
         )

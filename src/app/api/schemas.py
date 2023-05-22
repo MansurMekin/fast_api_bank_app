@@ -15,3 +15,6 @@ class CustomerCreateRequest(BaseModel):
     name: str = Field(min_length=3)
     email: str = Field(min_length=10, default="example@mail.com")
     phone_number: str = Field(min_length=8, default="87076165139")
+
+    class Config:
+        orm_mode = True

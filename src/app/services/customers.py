@@ -3,11 +3,11 @@ from sqlalchemy.orm import Session
 
 from app import models
 from app.api.schemas import CustomerCreateRequest
-from app.db import get_db
+from app.db import get_session
 
 
 class CustomerService:
-    def __init__(self, session: Session = Depends(get_db)) -> None:
+    def __init__(self, session: Session = Depends(get_session)) -> None:
         self.session = session
 
     def _get(self, customer_id: int):

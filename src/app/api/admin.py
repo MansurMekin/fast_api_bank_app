@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, Path, status
 from sqlalchemy.orm import Session
 
-from app.db import get_db
+from app.db import get_session
 from app.models import Account
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 
 @router.put("/block/{account_id}", status_code=status.HTTP_200_OK)
-async def block_account(db: Session = Depends(get_db), account_id: int = Path(gt=0)):
+async def block_account(db: Session = Depends(get_session), account_id: int = Path(gt=0)):
     account_model = db.query(Account).filter(Account.id == account_id).first()
     if account_model is None:
         raise HTTPException(
@@ -21,7 +21,7 @@ async def block_account(db: Session = Depends(get_db), account_id: int = Path(gt
 
 
 @router.put("/unblock/{account_id}", status_code=status.HTTP_200_OK)
-async def unblock_account(db: Session = Depends(get_db), account_id: int = Path(gt=0)):
+async def unblock_account(db: Session = Depends(get_session), account_id: int = Path(gt=0)):
     account_model = db.query(Account).filter(Account.id == account_id).first()
     if account_model is None:
         raise HTTPException(
